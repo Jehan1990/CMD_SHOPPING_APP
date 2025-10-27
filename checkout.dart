@@ -7,8 +7,10 @@ class Product {
   final double price;
   //constructor
   const Product({required this.id, required this.name, required this.price});
-  //getter
+  //getter initial is a method to get the first charecter of the product name
   String get initial=>name.substring(0,1);
+  //getter display name is a method to get name and price of the product 
+  //by concatinating string using initial getter. 
   String get displayName=>'($initial)${name.substring(1)} :\$$price';
 
 }
@@ -28,6 +30,7 @@ class Cart {
   //TODO:Item collection
 }
 
+//allProduct list with Product objects
 const allProducts = [
   Product(id: 1, name: 'apples', price: 1.6),
   Product(id: 2, name: 'bananas', price: 0.7),
@@ -54,14 +57,18 @@ end
 
 void main() {
   while (true) {
+    //writes the first line of question to ask user what they want to do. 
+    //It uses dart libray dart:io for stdout=standard_output
     stdout.write(
       'What do you want to do? (v)iew item, (a)dd item, (c)heckout ',
     );
+    //reads user input using stdin.readLineSync() from dart:io libray 
     final line = stdin.readLineSync();
+    //perform conditional logic using user input and chooseProduct() function.
     if (line == 'a') {
       final product=chooseProduct();
       if(product !=null){
-        print(product.displayName);
+        print('\n${product.displayName}');
       }
     } else if (line == 'v') {
       //TODO:implement
@@ -73,16 +80,22 @@ void main() {
   }
 }
 
-Product? chooseProduct(){
-  final productList=
-        allProducts.map((product)=>product.displayName).join('\n');
-  stdout.write('Available Products:\n$productList\nYour Choice: ');
-  final line=stdin.readLineSync();
-  for(var product in allProducts){
-    if(line==product.initial){
+
+//Function chooseProduct() which returns Product which is nullable
+Product? chooseProduct() {
+  final productList = allProducts
+      .map((product) => product.displayName)
+      .join('\n');//productList is of type String(multiline)
+
+//Display the product list for the user to choose the items in the cart
+  stdout.write('\nAvailable Products:\n$productList\n\nYour Choice: ');
+  //reads the user input
+  final line = stdin.readLineSync();
+  for (var product in allProducts) {
+    if (line == product.initial) {
       return product;
     }
   }
-  print('Not found');
+  print('Item not found');
   return null;
 }
