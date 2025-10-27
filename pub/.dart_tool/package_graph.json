@@ -27,13 +27,13 @@
       ]
     },
     {
-      "name": "collection",
-      "version": "1.19.1",
+      "name": "meta",
+      "version": "1.17.0",
       "dependencies": []
     },
     {
-      "name": "meta",
-      "version": "1.17.0",
+      "name": "collection",
+      "version": "1.19.1",
       "dependencies": []
     }
   ],
