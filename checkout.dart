@@ -49,7 +49,7 @@ class Cart {
       return 'Cart is empty';
     }
     final itemisedList = _item.values.map((item) => item.toString()).join('\n');
-    return '$itemisedList\nTotal: \$${total()}\n------------';
+    return '$itemisedList\nTotal: \$${total()}\n------------\n';
   }
 }
 
