@@ -1,60 +1,9 @@
 
 import 'dart:io';
 
-class Product {
-  //properties
-  final int id;
-  final String name;
-  final double price;
-  //constructor
-  const Product({required this.id, required this.name, required this.price});
-  //getter initial is a method to get the first charecter of the product name
-  String get initial => name.substring(0, 1);
-  //getter display name is a method to get name and price of the product
-  //by concatinating string using initial getter.
-  String get displayName => '($initial)${name.substring(1)} :\$$price';
-}
+import '../lib/cart.dart';
+import '../lib/product.dart';
 
-class Item {
-  //constructor
-  const Item({required this.product, this.quantity = 1});
-  //properties
-  final Product product;
-  final int quantity;
-  //getter
-  double get price => quantity * product.price;
-
-  @override
-  String toString() => '$quantity x ${product.name} \$$price';
-}
-
-class Cart {
-  final Map<int, Item> _item = {};
-
-  bool get isEmpty=>_item.isEmpty;
-
-  void addProduct(Product product) {
-    final item = _item[product.id];
-    if (item == null) {
-      _item[product.id] = Item(product: product, quantity: 1);
-    } else {
-      _item[product.id] = Item(product: product, quantity: item.quantity + 1);
-    }
-  }
-
-  double total() => _item.values
-      .map((item) => item.price)
-      .reduce((value, element) => value + element);
-
-  @override
-  String toString() {
-    if (_item.isEmpty) {
-      return 'Cart is empty';
-    }
-    final itemisedList = _item.values.map((item) => item.toString()).join('\n');
-    return '$itemisedList\nTotal: \$${total()}\n------------\n';
-  }
-}
 
 //allProduct list with Product objects
 const allProducts = [
