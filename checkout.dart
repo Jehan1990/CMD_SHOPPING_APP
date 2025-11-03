@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 class Product {
@@ -29,6 +30,8 @@ class Item {
 
 class Cart {
   final Map<int, Item> _item = {};
+
+  bool get isEmpty=>_item.isEmpty;
 
   void addProduct(Product product) {
     final item = _item[product.id];
@@ -97,7 +100,9 @@ What do you want to do? ''');
     } else if (line == 'v') {
       print('\n----CART----\n$cart');
     } else if (line == 'c') {
-      //TODO:implement
+      if(checkout(cart)){
+        break;
+      }
     } else if (line == 'q') {
       break;
     } else {
@@ -123,4 +128,37 @@ Product? chooseProduct() {
   }
   print('Item not found');
   return null;
+}
+
+
+bool checkout(Cart cart){
+  
+  if(cart.isEmpty){
+    print('Cart is empty\n');
+    return false;
+  }
+  
+  final total=cart.total();
+  print('Total: \$$total');
+  
+  stdout.write('Payment in cash \$');
+  
+  final line=stdin.readLineSync();
+  if(line==null || line.isEmpty){
+    return false;
+  }
+  final paid=double.tryParse(line);
+  if(paid==null){
+    return false;
+  }
+
+  if(paid>=total){
+    final change=paid-total;
+    print('Change:  \$${change.toStringAsFixed(2)}');
+    return true;
+  }else{
+    print('Not enough cash');
+    return true;
+  }
+
 }
